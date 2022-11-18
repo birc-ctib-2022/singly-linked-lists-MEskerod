@@ -20,6 +20,9 @@ class Link(Generic[T]):
     def __repr__(self) -> str:
         """Representation string."""
         return f'Link({self.head}, {self.tail})'
+    
+    def __eq__(self, other):
+        return self.head == other.head and self.tail == other.tail
 
 
 LList = Optional[Link[T]]  # A list is just a reference to the head or None
@@ -56,8 +59,8 @@ def drop(x: LList[T], k: int) -> LList[T]:
     >>> drop(Link(1, Link(2, None)), 1)
     Link(2, None)
     """
-    if x == None: 
-        return
+    if length(x) < k: 
+        return 
     while k:
          k -= 1
          x = x.tail
@@ -106,13 +109,33 @@ def reverse(x: LList[T]) -> LList[T]:
     Link(3, Link(2, Link(1, None)))
     """
     
-    if x == None: 
+    if length(x) == 0: 
         return
-    List = Link(None, None)
-    while length(x) > 1: 
-        List.head = x.head
-        List = Link(None, List)
+    List = None
+    while x: 
+        List = Link(x.head, List)
         x = x.tail
-    List.head = x.head
     return List
+
+def copy(x: LList[T]) -> LList[T]:
+    """
+    >>> copy(None) is None
+    True
+
+    >>> copy(Link(1, Link(2, None)))
+    Link(1, Link(2, None))
+    """
+    if length(x) == 0: 
+        return
+    List = Link(x.head, x.tail)
+    return List
+
         
+
+
+List1 = Link(1, Link(3, Link(4, None)))
+print(List1)
+List2 = copy(List1)
+List1.head = 9
+print(List1)
+print(List2)
