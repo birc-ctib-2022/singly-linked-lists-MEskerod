@@ -129,13 +129,3 @@ def copy(x: LList[T]) -> LList[T]:
         return
     List = Link(x.head, x.tail)
     return List
-
-        
-
-
-List1 = Link(1, Link(3, Link(4, None)))
-print(List1)
-List2 = copy(List1)
-List1.head = 9
-print(List1)
-print(List2)
